@@ -4,8 +4,6 @@
 
 import pandas as pd
 
-player_lookup = pd.read_csv('player ids.csv')
-
 def get_player_id(player_name, player_lookup):
     player = player_lookup.loc[player_lookup['player_name'] == player_name, :]
     return(player.loc[player['active'] == 1, 'player_id'].values[0])
