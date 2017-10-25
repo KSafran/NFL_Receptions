@@ -4,23 +4,20 @@ import pandas as pd
 import pull_season_data
 import re
 
-season = 2016
+def download_season_data(season, num_players = 150):
 
-leading_receivers = pd.read_html('https://www.pro-football-reference.com/years/' + str(season) + '/receiving.htm')[0]
-leading_receivers = leading_receivers.iloc[:150,:]
-leading_receivers.rename(columns = {leading_receivers.columns[1]: 'player'}, inplace = True)
-leading_receivers['player'] = [str(x) for x in leading_receivers['player']]
+    leading_receivers = pd.read_html('https://www.pro-football-reference.com/years/' + str(season) + '/receiving.htm')[0]
+    leading_receivers = leading_receivers.iloc[:num_players,:]
+    leading_receivers.rename(columns = {leading_receivers.columns[1]: 'player'}, inplace = True)
+    leading_receivers['player'] = [str(x) for x in leading_receivers['player']]
 
-leading_receivers['player'] = [re.sub('[*|+]', '', x) for x in leading_receivers['player']]
-player_lookup = pd.read_csv('player ids.csv')
+    leading_receivers['player'] = [re.sub('[*|+]', '', x) for x in leading_receivers['player']]
+    player_lookup = pd.read_csv('player ids.csv')
 
-data_list = []
-count = 0
-for player in leading_receivers['player']:
-    count += 1
-    if pd.isnull(player):
-        pass
-    else:
+    data_list = []
+    count = 0
+    for player in leading_receivers['player']:
+        count += 1
         try:
             receiver_df = pull_season_data.get_season_gamelog(player, season, player_lookup)
             receiver_df['season'] = season
@@ -32,5 +29,5 @@ for player in leading_receivers['player']:
             pass
 
 
-receivers = pd.concat(data_list)
-receivers.to_csv('receiving_leaders' + str(season) + '.csv')
+    receivers = pd.concat(data_list)
+    receivers.to_csv('filename' + str(season) + '.csv')
