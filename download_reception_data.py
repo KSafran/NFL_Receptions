@@ -5,6 +5,14 @@ import pull_season_data
 import re
 
 def download_season_data(season, num_players = 150):
+    '''Downloads a season worth of wide receiver data
+
+    season -- an int representing what season you want to pull (e.g. 2017)
+    num_players -- I want to pull the top x wide receivers (defaults to 150)
+
+    This function requires the player ids.csv file to be in the users working
+    directory. It saves a file named receiving_leaders_*season*.csv '''
+
 
     leading_receivers = pd.read_html('https://www.pro-football-reference.com/years/' + str(season) + '/receiving.htm')[0]
     leading_receivers = leading_receivers.iloc[:num_players,:]
@@ -30,4 +38,4 @@ def download_season_data(season, num_players = 150):
 
 
     receivers = pd.concat(data_list)
-    receivers.to_csv('filename' + str(season) + '.csv')
+    receivers.to_csv('receiving_leaders_' + str(season) + '.csv')
