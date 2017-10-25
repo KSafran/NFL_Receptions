@@ -3,7 +3,7 @@ import numpy as np
 
 def get_player_id(player_name, player_lookup):
     player = player_lookup.loc[player_lookup['player_name'] == player_name, :]
-    return(player.loc[player['active'] == 1, 'player_id'].values[0])
+    return(player.loc[:, 'player_id'].values[0])
 
 def create_season_url(player_id, year):
     return('https://www.pro-football-reference.com/players/'

@@ -6,4 +6,4 @@ import pandas as pd
 
 def get_player_id(player_name, player_lookup):
     player = player_lookup.loc[player_lookup['player_name'] == player_name, :]
-    return(player.loc[player['active'] == 1, 'player_id'].values[0])
+    return(player.loc[:, 'player_id'].values[0])
