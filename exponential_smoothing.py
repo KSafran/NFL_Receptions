@@ -5,6 +5,7 @@
 # number of receptions
 
 import numpy as np
+from scipy.optimize import minimize
 
 def poisson_nll(predictions, target):
 	'''returns the poisson negative log likelihood 
@@ -44,3 +45,16 @@ def exponential_smooth_pois_error(actual_values, alpha):
 	predictions = exponential_series(actual_values, alpha)
 	error = poisson_nll(predictions, actual_values)
 	return(error)
+
+# We need a function of just alpha for optimization
+def function_from_series(actual_values):
+	'''returns a poisson error function given a series
+	'''
+	def output_fun(alpha):
+		return(exponential_smooth_pois_error(actual_values, alpha))
+	return(output_fun)
+
+# Wrapping this all into one neat little function
+def simple_pois_exp_smooth(series):
+	optimize_me_capn = function_from_series(series)
+	return(minimize(optimize_me_capn, 0.5))
