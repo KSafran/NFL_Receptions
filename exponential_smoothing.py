@@ -33,10 +33,14 @@ def exponential_series(actual_values, alpha):
 		output.append(current)
 	return(output)
 
-def exponential_smooth_pois(series):
-	''' given a series, this returns the optimal
-	alpha for an exponential poisson smoother
+def exponential_smooth_pois_error(actual_values, alpha):
+	''' given a series and alpha this returns the 
+	poisson error of the exponentially weighted 
+	averages
 
-	series -- a series to expentially smooth
+	actual_values -- a series to expentially smooth
+	alpha -- smoothing parameter
 	'''
-		
+	predictions = exponential_series(actual_values, alpha)
+	error = poisson_nll(predictions, actual_values)
+	return(error)
