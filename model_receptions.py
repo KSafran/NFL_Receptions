@@ -1,7 +1,8 @@
 import download_reception_data
 import pandas as pd
 import matplotlib.pyplot
-#
+import numpy as np
+
 # download_reception_data.download_season_data(2015)
 # download_reception_data.download_season_data(2016)
 # download_reception_data.download_season_data(2017)
@@ -18,3 +19,5 @@ drop_these_cols = ['2PM', 'AY/A', 'Ast', 'Att', 'Att.1', 'Cmp', 'Cmp%',
                    'Unnamed: 7',  'Unnamed: 8', 'Unnamed: 9',
                    'Unnamed: 10', 'Y/A', 'Y/A.1', 'Y/Rt']
 all_data = all_data.drop(drop_these_cols, 1)
+
+# First let's try an exponential smoothing model
